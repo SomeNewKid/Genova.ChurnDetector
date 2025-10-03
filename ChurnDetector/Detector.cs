@@ -1,18 +1,44 @@
-﻿// File: Genova.ChurnDetector/Detector.cs
+﻿// This file is part of the Genova project licensed under the GNU General Public License v3.0.
+// See the LICENSE file in the project root for more information.
+
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Reflection;
+using Genova.Common.Attributes;
 
 namespace Genova.ChurnDetector;
 
-public sealed class Detector
+/// <summary>
+/// Provides churn-signal detection over text using fixed embeddings, centroids, and an optional k-NN seed vote.
+/// </summary>
+[SuppressMessage(
+    "StyleCop.CSharp.NamingRules",
+    "SA1310:Field names should not contain underscore",
+    Justification = "Readability of constants.")]
+[SuppressMessage(
+    "StyleCop.CSharp.SpacingRules",
+    "SA1011:Closing square brackets should be spaced correctly",
+    Justification = "Conflicting styling rules.")]
+[CodeQuality(Public = true, Justification = "Intended for use by the Rusty Kane website.")]
+public sealed partial class Detector
 {
-    // Artifact file names (embedded resources)
+    /// <summary>
+    /// Gets the manifest resource file name (embedded JSON) that defines model metadata and thresholds.
+    /// </summary>
     internal const string ManifestResourceName = "manifest.json";
+
+    /// <summary>
+    /// Gets the centroids resource file name (embedded JSON) that holds label prototypes and the optional global mean.
+    /// </summary>
     internal const string CentroidsResourceName = "centroids.json";
+
+    /// <summary>
+    /// Gets the seed bank resource file name (embedded JSON) used for the optional k-NN vote.
+    /// </summary>
     internal const string SeedBankResourceName = "seeds.json";
 
-    private const float EPS = 1e-4f;   // tolerance for float comparisons
+    private const float EPS = 1e-4f; // tolerance for float comparisons
 
     // k-NN blend knobs (vote mixed with prototype similarity)
     private const int K_NEIGHBORS = 9;
@@ -34,10 +60,52 @@ public sealed class Detector
     private readonly float _churnMinSim;
     private readonly float _minMargin;
 
-    // Narrow churn cues + negation guard
-    public static readonly Regex ChurnCueRegex = new(
-        @"(?ix)
-      \b(
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Detector"/> class by loading embedded artifacts.
+    /// </summary>
+    public Detector()
+    {
+        Assembly asm = typeof(Detector).Assembly;
+        ModelArtifacts artifacts = ArtifactLoader.Load(asm);
+
+        _embedder = new LocalHashEmbedder(artifacts.Manifest.VectorDim);
+
+        _churnMinSim = artifacts.Manifest.Thresholds.ChurnMinSimilarity;
+        _minMargin = artifacts.Manifest.Thresholds.MinMargin;
+
+        // Load centroids (also fetch optional __global_mean).
+        Dictionary<string, float[][]> by = artifacts.Centroids
+            .GroupBy(c => c.Label)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(c => c.Vector).ToArray(),
+                StringComparer.OrdinalIgnoreCase);
+
+        bool HasLabel(string key)
+        {
+            return by.ContainsKey(key) && by[key].Length > 0;
+        }
+
+        if (!HasLabel("churn") || !HasLabel("keep") || !HasLabel("unsure"))
+        {
+            throw new InvalidOperationException("Centroids must include labels: churn, keep, unsure.");
+        }
+
+        _churnCentroids = by["churn"];
+        _keepCentroids = by["keep"];
+        _unsureCentroids = by["unsure"];
+        float[][]? gm;
+        _globalMean = by.TryGetValue("__global_mean", out gm) ? gm.FirstOrDefault() : null;
+
+        // Load compact seed bank (optional).
+        _seeds = LoadSeeds(asm);
+    }
+
+    /// <summary>
+    /// Gets the compiled regular expression that detects churn cues (verbs with account-like objects).
+    /// </summary>
+    [GeneratedRegex(@"(?ix)
+        \b(
           cancel
         | terminate
         | unsubscribe
@@ -46,186 +114,238 @@ public sealed class Detector
         | stop \s+ renew(?:al)?
         | close \s+ (?:my|our|the) \s+ account
         | end \s+ (?:my|our|the) \s+ (?:plan|account|subscription|service|membership)
-      )\b",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant
-    );
-
-    public static readonly Regex NegationNearCueRegex = new(
-        @"(?ix)
-      \b(?:dont|don't|do \s* not|never|not|no \s* need \s* to)\b
-      [^\w]{0,10}
-      (?:cancel|terminate|unsubscribe|opt \s* out|stop|close|end)\b",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant
-    );
-
-    public Detector()
-    {
-        var asm = typeof(Detector).Assembly;
-        var artifacts = ArtifactLoader.Load(asm);
-
-        _embedder = new LocalHashEmbedder(artifacts.Manifest.vector_dim);
-
-        _churnMinSim = artifacts.Manifest.thresholds.churn_min_similarity;
-        _minMargin = artifacts.Manifest.thresholds.min_margin;
-
-        // Load centroids (also fetch optional __global_mean)
-        var by = artifacts.Centroids
-            .GroupBy(c => c.label)
-            .ToDictionary(g => g.Key, g => g.Select(c => c.vector).ToArray(), StringComparer.OrdinalIgnoreCase);
-
-        bool has(string k) => by.ContainsKey(k) && by[k].Length > 0;
-        if (!has("churn") || !has("keep") || !has("unsure"))
-            throw new InvalidOperationException("Centroids must include labels: churn, keep, unsure.");
-
-        _churnCentroids = by["churn"];
-        _keepCentroids = by["keep"];
-        _unsureCentroids = by["unsure"];
-        _globalMean = by.TryGetValue("__global_mean", out var gm) ? gm.FirstOrDefault() : null;
-
-        // Load compact seed bank (optional)
-        _seeds = LoadSeeds(asm);
-    }
+        )\b", RegexOptions.Compiled | RegexOptions.CultureInvariant)]
+    public static partial Regex ChurnCueRegex();
 
     /// <summary>
-    /// Returns ("churn" or "not_churn", confidence 0..1)
+    /// Gets the compiled regular expression that detects negation near a churn cue (e.g., "do not cancel").
     /// </summary>
+    [GeneratedRegex(@"(?ix)
+        \b(?:dont|don't|do \s* not|never|not|no \s* need \s* to)\b
+        [^\w]{0,10}
+        (?:cancel|terminate|unsubscribe|opt \s* out|stop|close|end)\b", RegexOptions.Compiled | RegexOptions.CultureInvariant)]
+    public static partial Regex NegationNearCueRegex();
+
+    /// <summary>
+    /// Gets the churn signal for a single input.
+    /// </summary>
+    /// <param name="input">The user input text to score.</param>
+    /// <returns>
+    /// A tuple of the predicted label (<c>"churn"</c> or <c>"not_churn"</c>) and a confidence score in the range [0, 1].
+    /// </returns>
     public (string Label, float Confidence) GetSignal(string input)
     {
-        var v = _embedder.Embed(input ?? string.Empty);
+        float[] v = _embedder.Embed(input ?? string.Empty);
         v = ApplyMeanCenter(v, _globalMean); // center + L2-normalize if mean present
 
-        // Max-over-prototypes per label (centered space)
+        // Max-over-prototypes per label (centered space).
         float churnProto = MaxSim(v, _churnCentroids);
         float keepSim = MaxSim(v, _keepCentroids);
         float unsureSim = MaxSim(v, _unsureCentroids);
 
-        // k-NN vote over seed bank (centered space)
+        // k-NN vote over seed bank (centered space).
         float vote = ComputeChurnVote(v, K_NEIGHBORS);
-        float churnScore = ALPHA * churnProto + (1 - ALPHA) * vote;
+        float churnScore = (ALPHA * churnProto) + ((1 - ALPHA) * vote);
 
-        // Determine top-2 and margin using prototype sims (ranking unchanged)
-        Span<float> sims = stackalloc float[3] { churnProto, keepSim, unsureSim };
-        var (topIdx, secondIdx, top, second) = VectorMath.Top2(sims);
-        var margin = top - second;
+        // Determine top-2 and margin using prototype sims (ranking unchanged).
+        Span<float> sims = [churnProto, keepSim, unsureSim];
+        (int topIdx, int secondIdx, float top, float second) = VectorMath.Top2(sims);
+        float margin = top - second;
 
-        bool hasCue = ChurnCueRegex.IsMatch(input ?? string.Empty);
-        bool negatesCue = NegationNearCueRegex.IsMatch(input ?? string.Empty);
+        bool hasCue = ChurnCueRegex().IsMatch(input ?? string.Empty);
+        bool negatesCue = NegationNearCueRegex().IsMatch(input ?? string.Empty);
 
         // Allow churn only if cue present and not negated;
         // threshold uses blended churnScore; rank still uses prototypes.
-        if (hasCue && !negatesCue &&
-            topIdx == 0 &&
-            (churnScore + EPS) >= _churnMinSim &&
-            (margin + EPS) >= _minMargin)
+        if (hasCue && !negatesCue
+            && topIdx == 0
+            && (churnScore + EPS) >= _churnMinSim
+            && (margin + EPS) >= _minMargin)
         {
             return ("churn", Math.Clamp(churnScore, 0f, 1f));
         }
 
-        var bestNonChurn = Math.Max(keepSim, unsureSim);
+        float bestNonChurn = Math.Max(keepSim, unsureSim);
         return ("not_churn", Math.Clamp(bestNonChurn, 0f, 1f));
     }
 
-    // --- DEBUG HELPERS ---
-
+    /// <summary>
+    /// Gets the raw prototype similarities (churn, keep, unsure) for debugging.
+    /// </summary>
+    /// <param name="input">The user input text to score.</param>
+    /// <returns>An array of labels and a parallel array of prototype similarities.</returns>
     public (string[] Labels, float[] Similarities) GetRawSimilarities(string input)
     {
-        var v = _embedder.Embed(input ?? string.Empty);
+        float[] v = _embedder.Embed(input ?? string.Empty);
         v = ApplyMeanCenter(v, _globalMean);
 
-        var churnProto = MaxSim(v, _churnCentroids);
-        var keepSim = MaxSim(v, _keepCentroids);
-        var unsureSim = MaxSim(v, _unsureCentroids);
+        float churnProto = MaxSim(v, _churnCentroids);
+        float keepSim = MaxSim(v, _keepCentroids);
+        float unsureSim = MaxSim(v, _unsureCentroids);
+
         return (new[] { "churn", "keep", "unsure" }, new[] { churnProto, keepSim, unsureSim });
     }
 
+    /// <summary>
+    /// Gets a human-readable explanation for the current model decision, including gating and threshold checks.
+    /// </summary>
+    /// <param name="input">The user input text to explain.</param>
+    /// <returns>A textual explanation of the model's scoring and decision bars.</returns>
     public string Explain(string input)
     {
-        var v = _embedder.Embed(input ?? string.Empty);
+        float[] v = _embedder.Embed(input ?? string.Empty);
         v = ApplyMeanCenter(v, _globalMean);
 
         float churnProto = MaxSim(v, _churnCentroids);
         float keepSim = MaxSim(v, _keepCentroids);
         float unsureSim = MaxSim(v, _unsureCentroids);
         float vote = ComputeChurnVote(v, K_NEIGHBORS);
-        float churnScore = ALPHA * churnProto + (1 - ALPHA) * vote;
+        float churnScore = (ALPHA * churnProto) + ((1 - ALPHA) * vote);
 
-        Span<float> sims = stackalloc float[3] { churnProto, keepSim, unsureSim };
-        var (topIdx, secondIdx, top, second) = VectorMath.Top2(sims);
-        var margin = top - second;
+        Span<float> sims = [churnProto, keepSim, unsureSim];
+        (int topIdx, int secondIdx, float top, float second) = VectorMath.Top2(sims);
+        float margin = top - second;
 
-        var topLabel = topIdx switch { 0 => "churn", 1 => "keep", _ => "unsure" };
-        bool cue = ChurnCueRegex.IsMatch(input ?? string.Empty);
+        string topLabel = topIdx switch
+        {
+            0 => "churn",
+            1 => "keep",
+            _ => "unsure"
+        };
+
+        bool cue = ChurnCueRegex().IsMatch(input ?? string.Empty);
         bool thrOK = (churnScore + EPS) >= _churnMinSim;
         bool marOK = (topIdx == 0) ? ((margin + EPS) >= _minMargin) : false;
 
         string reason;
-        if (!cue) reason = "blocked: cue=false";
-        else if (topIdx != 0) reason = $"blocked: top='{topLabel}' (top={top:F2}) > churnProto({churnProto:F2})";
-        else if (!thrOK) reason = $"blocked: blended threshold (score={churnScore:F2} < min={_churnMinSim:F2})";
-        else if (!marOK) reason = $"blocked: margin (margin={margin:F2} < min={_minMargin:F2})";
-        else reason = "churn: passed cue, threshold, and margin";
+        if (!cue)
+        {
+            reason = "blocked: cue=false";
+        }
+        else if (topIdx != 0)
+        {
+            reason = $"blocked: top='{topLabel}' (top={top:F2}) > churnProto({churnProto:F2})";
+        }
+        else if (!thrOK)
+        {
+            reason = $"blocked: blended threshold (score={churnScore:F2} < min={_churnMinSim:F2})";
+        }
+        else if (!marOK)
+        {
+            reason = $"blocked: margin (margin={margin:F2} < min={_minMargin:F2})";
+        }
+        else
+        {
+            reason = "churn: passed cue, threshold, and margin";
+        }
 
         return
-          $"Explain: cue={(cue ? "true" : "false")}, " +
-          $"proto={churnProto:F4}, vote={vote:F2}, blended={churnScore:F4}, " +
-          $"keep={keepSim:F4}, unsure={unsureSim:F4}, top={topLabel}, margin={margin:F4}, " +
-          $"bars(thr={_churnMinSim:F4}, minMargin={_minMargin:F4}, eps={EPS:G}) -> {reason}";
+            $"Explain: cue={(cue ? "true" : "false")}, " +
+            $"proto={churnProto:F4}, vote={vote:F2}, blended={churnScore:F4}, " +
+            $"keep={keepSim:F4}, unsure={unsureSim:F4}, top={topLabel}, margin={margin:F4}, " +
+            $"bars(thr={_churnMinSim:F4}, minMargin={_minMargin:F4}, eps={EPS:G}) -> {reason}";
     }
 
-    // --- Internals ---
-
+    /// <summary>
+    /// Applies mean-centering using the provided global mean (if any) and re-normalizes the vector.
+    /// </summary>
+    /// <param name="v">The input vector to center.</param>
+    /// <param name="mu">The global mean vector; if <c>null</c>, returns the original vector.</param>
+    /// <returns>The centered and L2-normalized vector (or the original if no mean is provided).</returns>
     private static float[] ApplyMeanCenter(float[] v, float[]? mu)
     {
-        if (mu is null) return v;
-        var outv = (float[])v.Clone();
+        if (mu is null)
+        {
+            return v;
+        }
+
+        float[] outv = (float[])v.Clone();
         double sum = 0;
         for (int i = 0; i < outv.Length; i++)
         {
             outv[i] -= mu[i];
             sum += (double)outv[i] * outv[i];
         }
-        var norm = Math.Sqrt(sum);
+
+        double norm = Math.Sqrt(sum);
         if (norm > 0)
         {
-            var inv = (float)(1.0 / norm);
-            for (int i = 0; i < outv.Length; i++) outv[i] *= inv;
+            float inv = (float)(1.0 / norm);
+            for (int i = 0; i < outv.Length; i++)
+            {
+                outv[i] *= inv;
+            }
         }
+
         return outv;
     }
 
+    /// <summary>
+    /// Gets the maximum dot-product similarity to any centroid within a label group.
+    /// </summary>
+    /// <param name="v">The (centered) query vector.</param>
+    /// <param name="centroids">The centroids for a particular label.</param>
+    /// <returns>The maximum similarity.</returns>
     private static float MaxSim(ReadOnlySpan<float> v, float[][] centroids)
     {
         float best = float.NegativeInfinity;
         for (int i = 0; i < centroids.Length; i++)
         {
-            var s = VectorMath.Dot(v, centroids[i]);
-            if (s > best) best = s;
+            float s = VectorMath.Dot(v, centroids[i]);
+            if (s > best)
+            {
+                best = s;
+            }
         }
+
         return best;
     }
 
-    private (float[] V, string Label)[] LoadSeeds(Assembly asm)
+    /// <summary>
+    /// Loads an optional seed bank from an embedded resource and returns the seed vectors and labels.
+    /// </summary>
+    /// <param name="asm">The assembly that contains the embedded seed bank resource.</param>
+    /// <returns>An array of (vector, label) seed entries; an empty array if unavailable.</returns>
+    private static (float[] V, string Label)[] LoadSeeds(Assembly asm)
     {
         try
         {
-            var name = asm.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith("." + SeedBankResourceName, StringComparison.OrdinalIgnoreCase));
-            if (name is null) return Array.Empty<(float[] V, string Label)>();
+            string? name = asm
+                .GetManifestResourceNames()
+                .FirstOrDefault(n => n.EndsWith("." + SeedBankResourceName, StringComparison.OrdinalIgnoreCase));
 
-            using var s = asm.GetManifestResourceStream(name);
-            if (s is null) return Array.Empty<(float[] V, string Label)>();
-            using var doc = JsonDocument.Parse(s);
-            if (!doc.RootElement.TryGetProperty("seeds", out var arr)) return Array.Empty<(float[] V, string Label)>();
-
-            var list = new List<(float[] V, string Label)>(arr.GetArrayLength());
-            foreach (var e in arr.EnumerateArray())
+            if (name is null)
             {
-                var label = e.GetProperty("label").GetString() ?? "";
-                var vecEl = e.GetProperty("vector");
-                var vec = new float[vecEl.GetArrayLength()];
+                return Array.Empty<(float[] V, string Label)>();
+            }
+
+            using Stream? s = asm.GetManifestResourceStream(name);
+            if (s is null)
+            {
+                return Array.Empty<(float[] V, string Label)>();
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(s);
+            if (!doc.RootElement.TryGetProperty("seeds", out JsonElement arr))
+            {
+                return Array.Empty<(float[] V, string Label)>();
+            }
+
+            List<(float[] V, string Label)> list = new List<(float[] V, string Label)>(arr.GetArrayLength());
+            foreach (JsonElement e in arr.EnumerateArray())
+            {
+                string label = e.GetProperty("label").GetString() ?? string.Empty;
+                JsonElement vecEl = e.GetProperty("vector");
+                float[] vec = new float[vecEl.GetArrayLength()];
                 int i = 0;
-                foreach (var v in vecEl.EnumerateArray()) vec[i++] = v.GetSingle();
+                foreach (JsonElement el in vecEl.EnumerateArray())
+                {
+                    vec[i++] = el.GetSingle();
+                }
+
                 list.Add((vec, label));
             }
+
             return list.ToArray();
         }
         catch
@@ -234,22 +354,37 @@ public sealed class Detector
         }
     }
 
+    /// <summary>
+    /// Computes the fraction of churn labels among the top-k nearest seeds (k-NN vote).
+    /// </summary>
+    /// <param name="v">The (centered) query vector.</param>
+    /// <param name="k">The number of nearest seeds to consider.</param>
+    /// <returns>A value in [0,1] representing the fraction of churn in the top-k.</returns>
     private float ComputeChurnVote(ReadOnlySpan<float> v, int k)
     {
-        if (_seeds.Length == 0 || k <= 0) return 0f;
-
-        // Compute similarities to all seeds; pick top-k
-        var sims = new List<(float sim, string label)>(_seeds.Length);
-        foreach (var s in _seeds)
+        if (_seeds.Length == 0 || k <= 0)
         {
-            sims.Add((VectorMath.Dot(v, s.V), s.Label));
+            return 0f;
         }
+
+        // Compute similarities to all seeds; pick top-k.
+        List<(float sim, string label)> sims = new List<(float sim, string label)>(_seeds.Length);
+        foreach ((float[] V, string Label) seed in _seeds)
+        {
+            sims.Add((VectorMath.Dot(v, seed.V), seed.Label));
+        }
+
         sims.Sort((a, b) => b.sim.CompareTo(a.sim));
         int kk = Math.Min(k, sims.Count);
 
         int churnCount = 0;
         for (int i = 0; i < kk; i++)
-            if (string.Equals(sims[i].label, "churn", StringComparison.OrdinalIgnoreCase)) churnCount++;
+        {
+            if (string.Equals(sims[i].label, "churn", StringComparison.OrdinalIgnoreCase))
+            {
+                churnCount++;
+            }
+        }
 
         return (float)churnCount / Math.Max(1, kk);
     }
