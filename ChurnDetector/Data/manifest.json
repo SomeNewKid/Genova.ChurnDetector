@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "created_utc": "2025-10-02T18:01:30.3321806Z",
+  "vector_dim": 256,
+  "labels": [
+    "churn",
+    "keep",
+    "unsure"
+  ],
+  "thresholds": {
+    "churn_min_similarity": 0.38,
+    "min_margin": 0
+  },
+  "embedder": {
+    "type": "CharTrigramHashing",
+    "ngram": 3,
+    "dim": 256,
+    "hash": "FNV1A64",
+    "signed": true,
+    "lowercase": true,
+    "keep_alnum_space_only": true,
+    "padding_spaces": 2
+  },
+  "blend": {
+    "use_knn": true,
+    "k": 9,
+    "alpha": 0.6
+  }
+}

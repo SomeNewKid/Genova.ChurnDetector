@@ -1,0 +1,644 @@
+"text",label
+"How do i stop the membership?",churn
+"How do i end the plan?",churn
+"Please unsubscribe me from our service.",churn
+"Stop membership.",churn
+"Restart the background service.",unsure
+"End my membership immediately.",churn
+"Please don't close the membership.",keep
+"How do i close my account?",churn
+"How do i cancel our plan?",churn
+"Cancel subscription.",churn
+"Can you stop the membership?",churn
+"How do i end the dev service?",unsure
+"I need to close my plan due to budget cuts.",churn
+"Please continue my account.",keep
+"I want to unsubscribe my subscription.",churn
+"Please close my subscription.",churn
+"How do i end the vm?",unsure
+"Unsubscribe subscription.",churn
+"How do i stop the service?",churn
+"Close the account.",churn
+"Do not close my service.",keep
+"Please unsubscribe me from my plan.",churn
+"I need to stop our plan due to budget cuts.",churn
+"The app crashed and i ended the process.",unsure
+"I need to end the subscription due to budget cuts.",churn
+"Cancel my membership.",churn
+"Please stop our membership.",churn
+"Do not unsubscribe me from my membership.",keep
+"How do i stop the build?",unsure
+"Stop the membership.",churn
+"How do i unsubscribe from the membership?",churn
+"Unsubscribe plan.",churn
+"End the deployment.",unsure
+"End the dev service.",unsure
+"Keep my membership and renew it automatically.",keep
+"Please cancel our subscription.",churn
+"Close the preview.",unsure
+"How do i close our subscription?",churn
+"Terminate my service this week.",churn
+"Close the pod.",unsure
+"Close the vm.",unsure
+"How do i close the plan?",churn
+"Please unsubscribe me from my membership this week.",churn
+"Stop subscription.",churn
+"How do i end the test service?",unsure
+"Can you close our membership?",churn
+"I need to close our subscription due to budget cuts.",churn
+"Please renew my account.",keep
+"Cancel our subscription.",churn
+"End the database service.",unsure
+"I need to terminate the account because I switched providers.",churn
+"Terminate the account today.",churn
+"End my account today.",churn
+"End the membership before renewal.",churn
+"How do i unsubscribe from my service?",churn
+"Cancel our subscription immediately.",churn
+"Please unsubscribe me from my membership.",churn
+"I need to stop the account because company policy changed.",churn
+"How do i stop the system service?",unsure
+"Unsubscribe me from our account.",churn
+"How do i close the build?",unsure
+"I need to end my account because I switched providers.",churn
+"Keep my service and renew it automatically.",keep
+"I plan to keep the service.",keep
+"How do i end the service?",churn
+"Stop the background service.",unsure
+"Please don't stop the account.",keep
+"How do i terminate my subscription?",churn
+"How do i terminate our service?",churn
+"Please continue the membership.",keep
+"Please terminate my plan.",churn
+"Close the thread.",unsure
+"How do i terminate our membership?",churn
+"Stop the service this week.",churn
+"End the thread.",unsure
+"Please unsubscribe me from our membership before renewal.",churn
+"How do i end the task?",unsure
+"I need to close my subscription because I switched providers.",churn
+"How do i terminate the service?",churn
+"I prefer to keep my subscription as is.",keep
+"Please unsubscribe me from our subscription.",churn
+"How do i unsubscribe from the plan?",churn
+"I want to stop my subscription.",churn
+"Cancel our membership today.",churn
+"Unsubscribe me from the service because company policy changed.",churn
+"Please don't close the subscription.",keep
+"Restart the database service.",unsure
+"Unsubscribe me from our membership today.",churn
+"Close our account.",churn
+"Stop the plan.",churn
+"I want to keep my account.",keep
+"Do not end my account.",keep
+"Stop our service before renewal.",churn
+"Please continue the account.",keep
+"Please renew my plan.",keep
+"Do not end my service.",keep
+"Do not stop my service.",keep
+"How do i end the session?",unsure
+"Please unsubscribe me from the service today.",churn
+"Unsubscribe membership.",churn
+"Cancel service.",churn
+"Please keep my subscription active.",keep
+"Unsubscribe me from my membership.",churn
+"I want to terminate my subscription.",churn
+"Please end our membership.",churn
+"Stop plan.",churn
+"Can you stop my service?",churn
+"Cancel membership.",churn
+"Do not stop my subscription.",keep
+"Should i end the task when it hangs?",unsure
+"Cancel our account immediately.",churn
+"Do not terminate my membership.",keep
+"Do not terminate my account.",keep
+"End the vm.",unsure
+"Keep my service active.",keep
+"End the account.",churn
+"Please close the subscription.",churn
+"Can you end my subscription?",churn
+"Please close our service.",churn
+"How do i close the tab?",unsure
+"Can you end my service?",churn
+"How do i close the account?",churn
+"Close the daemon.",unsure
+"I'd like to terminate my service.",churn
+"I plan to keep the plan.",keep
+"Unsubscribe me from the account because company policy changed.",churn
+"How do i stop our plan?",churn
+"Please don't cancel the service.",keep
+"How do i unsubscribe from our account?",churn
+"Stop my service.",churn
+"Close my service.",churn
+"Can you terminate our plan?",churn
+"I need to end the account due to budget cuts.",churn
+"Where can i download my invoices?",unsure
+"Cancel our account.",churn
+"Stop the local service.",unsure
+"Can you close our service?",churn
+"How do i terminate the membership?",churn
+"I prefer to keep my service as is.",keep
+"Cancel the subscription this week.",churn
+"I need to close the account because company policy changed.",churn
+"No changes; keep the membership.",keep
+"Do not close my membership.",keep
+"Close the tab.",unsure
+"Please don't stop the membership.",keep
+"How do i close the deployment?",unsure
+"Please terminate the subscription.",churn
+"Close the process.",unsure
+"Disable the database service temporarily.",unsure
+"Please unsubscribe me from my account today.",churn
+"Unsubscribe me from our subscription because I switched providers.",churn
+"Can you terminate the service?",churn
+"Please end my service.",churn
+"How do i stop our subscription?",churn
+"Cancel my subscription this week.",churn
+"I plan to keep the account.",keep
+"I need to end our account because I no longer need it.",churn
+"Can you stop our service?",churn
+"I would like to cancel my account.",churn
+"Close the service.",churn
+"Please terminate our plan.",churn
+"How do i end the pod?",unsure
+"Please end our subscription.",churn
+"Please continue my subscription.",keep
+"How do i stop our account?",churn
+"Stop the database service.",unsure
+"How do i close my subscription?",churn
+"Do not terminate my subscription.",keep
+"Do not close my plan.",keep
+"Terminate our membership immediately.",churn
+"Stop our membership.",churn
+"Do not unsubscribe me from my service.",keep
+"Disable the windows service temporarily.",unsure
+"Unsubscribe me from the account.",churn
+"Do not stop my membership.",keep
+"End the pipeline.",unsure
+"Please don't close the service.",keep
+"Can you end my account?",churn
+"Close the plan.",churn
+"I need to cancel the plan because I no longer need it.",churn
+"How do i end my plan?",churn
+"I want to keep my plan.",keep
+"Close our plan.",churn
+"Keep my account active.",keep
+"Can you cancel my plan?",churn
+"How do i close the thread?",unsure
+"How do i unsubscribe from the account?",churn
+"End the job.",unsure
+"End account.",churn
+"Please keep the account open and confirm.",keep
+"Please cancel our account.",churn
+"I need to end our subscription due to budget cuts.",churn
+"Terminate my subscription.",churn
+"Please don't terminate the service.",keep
+"Can you end our membership?",churn
+"Close the container.",unsure
+"I prefer to keep my membership as is.",keep
+"Please renew my subscription.",keep
+"End our membership.",churn
+"Please unsubscribe me from the membership.",churn
+"Unsubscribe me from our plan immediately.",churn
+"I need to cancel my service because I no longer need it.",churn
+"Please don't end the membership.",keep
+"Do not cancel my subscription.",keep
+"Please keep my account active.",keep
+"I want to keep my service.",keep
+"Cancel the account immediately.",churn
+"Please end my subscription.",churn
+"Please end my account.",churn
+"How do i terminate our account?",churn
+"How do i end the job?",unsure
+"Stop the deployment.",unsure
+"I need to terminate our account due to budget cuts.",churn
+"Please continue the service.",keep
+"Please stop the plan.",churn
+"I need to stop our account because company policy changed.",churn
+"Please continue the subscription.",keep
+"Please terminate our account.",churn
+"Unsubscribe me from the plan this week.",churn
+"Stop the dev service.",unsure
+"How do i cancel our account?",churn
+"Close plan.",churn
+"Please close our membership.",churn
+"Do not close my subscription.",keep
+"End the container.",unsure
+"How do i unsubscribe from our membership?",churn
+"I need to cancel our service because company policy changed.",churn
+"Stop the system service.",unsure
+"How do i stop the job?",unsure
+"How do i stop the pipeline?",unsure
+"Can you stop the service?",churn
+"Please stop our subscription.",churn
+"How do i end the instance?",unsure
+"Can you close the membership?",churn
+"I'd like to close my service.",churn
+"Close my account immediately.",churn
+"Close the job.",unsure
+"End the connection.",unsure
+"How do i cancel my plan?",churn
+"Do not terminate my plan.",keep
+"Please keep the service open and confirm.",keep
+"Disable the dev service temporarily.",unsure
+"Please don't stop the plan.",keep
+"How do i close the task?",unsure
+"How do i stop the pod?",unsure
+"Please cancel the service.",churn
+"Can you cancel our membership?",churn
+"How do i end the windows service?",unsure
+"How do i stop my membership?",churn
+"Stop the daemon.",unsure
+"End the service immediately.",churn
+"How do i close the container?",unsure
+"I need to close my membership because I no longer need it.",churn
+"End my subscription.",churn
+"How do i close the daemon?",unsure
+"How do i end our plan?",churn
+"I need to terminate the plan because company policy changed.",churn
+"Close our membership.",churn
+"Stop service.",churn
+"How do i stop our service?",churn
+"How do i cancel my service?",churn
+"How do i close the process?",unsure
+"Do not stop my plan.",keep
+"Unsubscribe me from our service today.",churn
+"End my service before renewal.",churn
+"Do not stop my account.",keep
+"Please cancel my account.",churn
+"How do i end my membership?",churn
+"How do i change my password?",unsure
+"Please end our plan.",churn
+"Please terminate the service.",churn
+"How do i end my service?",churn
+"Stop the session.",unsure
+"How do i end the pipeline?",unsure
+"Please unsubscribe me from the plan.",churn
+"How do i end the process?",unsure
+"Please close our subscription.",churn
+"Please don't stop the subscription.",keep
+"Please continue my membership.",keep
+"Please cancel my subscription.",churn
+"Please don't end the plan.",keep
+"Please end our service.",churn
+"How do i end the background service?",unsure
+"How do i stop the task?",unsure
+"How do i stop the process?",unsure
+"Please renew my service.",keep
+"Please don't end the service.",keep
+"Terminate our account before renewal.",churn
+"End the test service.",unsure
+"No changes; keep the plan.",keep
+"Stop the job.",unsure
+"I need to cancel our subscription because I switched providers.",churn
+"Stop the subscription before renewal.",churn
+"How do i stop the deployment?",unsure
+"How do i terminate my account?",churn
+"Please don't unsubscribe me from the subscription.",keep
+"Please end my plan.",churn
+"I need to close the service due to budget cuts.",churn
+"Close the window.",unsure
+"How do i terminate my service?",churn
+"Terminate subscription.",churn
+"My 2fa code is not arriving.",unsure
+"Stop the pipeline.",unsure
+"End plan.",churn
+"Please keep the membership open and confirm.",keep
+"Can you stop my subscription?",churn
+"I need to stop the plan because I switched providers.",churn
+"Stop my subscription.",churn
+"Do not unsubscribe me from my account.",keep
+"Please close my membership.",churn
+"End the process.",unsure
+"Please stop our account.",churn
+"Disable the local service temporarily.",unsure
+"How do i stop the vm?",unsure
+"I need to cancel our account because company policy changed.",churn
+"Unsubscribe me from my membership immediately.",churn
+"How do i terminate the plan?",churn
+"Can you terminate the account?",churn
+"How do i stop the background service?",unsure
+"Disable the test service temporarily.",unsure
+"I plan to keep the subscription.",keep
+"How do i end the system service?",unsure
+"Restart the windows service.",unsure
+"Close the pipeline.",unsure
+"Please don't stop the service.",keep
+"How do i unsubscribe from the subscription?",churn
+"Do not terminate my service.",keep
+"Close our service before renewal.",churn
+"I need to terminate my subscription due to budget cuts.",churn
+"I need to cancel the account because I no longer need it.",churn
+"Close my membership immediately.",churn
+"I need to terminate my membership because I no longer need it.",churn
+"Cancel my membership this week.",churn
+"Unsubscribe me from the subscription because company policy changed.",churn
+"Stop the server service.",unsure
+"I cannot log in to the app.",unsure
+"Please terminate my account.",churn
+"How can i stop background updates?",unsure
+"I'd like to unsubscribe my service.",churn
+"End our account before renewal.",churn
+"Keep my plan active.",keep
+"Close the subscription.",churn
+"Can you close our subscription?",churn
+"Cancel our service this week.",churn
+"Disable the server service temporarily.",unsure
+"Please keep my service active.",keep
+"Close the task.",unsure
+"End the system service.",unsure
+"Stop our account.",churn
+"Unsubscribe me from our membership.",churn
+"End my service.",churn
+"Terminate our service before renewal.",churn
+"Please close the preview tab.",unsure
+"Can you cancel the membership?",churn
+"End the instance.",unsure
+"Please close our plan.",churn
+"How do i add a payment method?",unsure
+"I need to close the plan because company policy changed.",churn
+"Close the instance.",unsure
+"How do i close our plan?",churn
+"Stop the membership today.",churn
+"How do i close the modal?",unsure
+"Please don't unsubscribe me from the membership.",keep
+"Close our account before renewal.",churn
+"How do i close the pod?",unsure
+"How do i stop the instance?",unsure
+"Stop the pod.",unsure
+"Please keep the plan open and confirm.",keep
+"I want to keep my subscription.",keep
+"I need to stop our membership because company policy changed.",churn
+"Can you stop my plan?",churn
+"Unsubscribe me from our plan because company policy changed.",churn
+"Please stop my membership.",churn
+"Can you cancel our service?",churn
+"How do i close the application?",unsure
+"Stop the database service only on the test machine.",unsure
+"Can you stop the subscription?",churn
+"I need to cancel my plan because I switched providers.",churn
+"Please cancel the account.",churn
+"How do i cancel our subscription?",churn
+"How do i stop the thread?",unsure
+"End the build.",unsure
+"Stop our account immediately.",churn
+"Please stop my subscription.",churn
+"How do i close the dialog?",unsure
+"Stop my service before renewal.",churn
+"Close my account.",churn
+"I need to cancel the membership because I switched providers.",churn
+"How do i close the session?",unsure
+"How do i end the database service?",unsure
+"Can you terminate my membership?",churn
+"End my membership.",churn
+"Unsubscribe me from my service because I no longer need it.",churn
+"How do i close our service?",churn
+"I need to cancel my account due to budget cuts.",churn
+"How do i end the container?",unsure
+"Stop my membership.",churn
+"Stop the process.",unsure
+"Keep my subscription active.",keep
+"Do not close my account.",keep
+"Stop the container.",unsure
+"Please close the service.",churn
+"Terminate our subscription.",churn
+"Can you close my subscription?",churn
+"Please continue the plan.",keep
+"Close the dialog.",unsure
+"Can you cancel the subscription?",churn
+"Close my service this week.",churn
+"Can you cancel my service?",churn
+"Please terminate the account.",churn
+"Restart the local service.",unsure
+"Please renew my membership.",keep
+"Cancel my account.",churn
+"Unsubscribe me from my account.",churn
+"How do i update my billing address?",unsure
+"How do i close our membership?",churn
+"How do i cancel my membership?",churn
+"Please terminate our membership.",churn
+"How do i end the deployment?",unsure
+"Close my subscription immediately.",churn
+"Stop the connection.",unsure
+"End the windows service.",unsure
+"I need to end my plan due to budget cuts.",churn
+"How do i stop the dev service?",unsure
+"Close the modal.",unsure
+"Do not end my membership.",keep
+"How do i stop the account?",churn
+"Stop the vm.",unsure
+"End the session.",unsure
+"End my subscription today.",churn
+"Unsubscribe me from my service.",churn
+"Keep my plan and renew it automatically.",keep
+"How do i stop the daemon?",unsure
+"Restart the dev service.",unsure
+"How do i end the daemon?",unsure
+"Please terminate our subscription.",churn
+"Close the session.",unsure
+"Cancel the account.",churn
+"I need to terminate the service due to budget cuts.",churn
+"I need to end my subscription because I switched providers.",churn
+"Unsubscribe me from the service this week.",churn
+"Close the connection.",unsure
+"Unsubscribe me from my account immediately.",churn
+"Please don't cancel the subscription.",keep
+"Please cancel my membership.",churn
+"Do not cancel my plan.",keep
+"How do i unsubscribe from my membership?",churn
+"I would like to end my account.",churn
+"Can you end our service?",churn
+"I prefer to keep my plan as is.",keep
+"Disable the background service temporarily.",unsure
+"Restart the server service.",unsure
+"How do i end the subscription?",churn
+"Unsubscribe me from our membership because company policy changed.",churn
+"Please end the membership.",churn
+"Keep the account open.",keep
+"Unsubscribe me from our plan.",churn
+"Terminate my service.",churn
+"Restart the system service.",unsure
+"How do i stop the windows service?",unsure
+"Stop the test service.",unsure
+"End the daemon.",unsure
+"How do i close the job?",unsure
+"Please keep the subscription open and confirm.",keep
+"Please unsubscribe me from the service.",churn
+"Close the membership.",churn
+"Please unsubscribe me from our plan.",churn
+"End our service today.",churn
+"Unsubscribe me from my subscription because company policy changed.",churn
+"Can you terminate my subscription?",churn
+"Please unsubscribe me from our subscription immediately.",churn
+"Where do i close the app window on mac?",unsure
+"Stop the windows service.",unsure
+"End the server service.",unsure
+"How do i stop the connection?",unsure
+"Please don't terminate the plan.",keep
+"Stop the thread.",unsure
+"I want to keep my membership.",keep
+"Close the application.",unsure
+"How do i unsubscribe from my plan?",churn
+"Please don't close the account.",keep
+"Please don't terminate the membership.",keep
+"End the account today.",churn
+"Close our service.",churn
+"I need to end our service because company policy changed.",churn
+"How do i terminate our subscription?",churn
+"I want to end my subscription.",churn
+"How do i stop the subscription?",churn
+"Unsubscribe me from my service today.",churn
+"Please don't close the plan.",keep
+"No changes; keep the subscription.",keep
+"Stop the task.",unsure
+"I need to close the membership because I switched providers.",churn
+"Please close the membership.",churn
+"Please don't cancel the account.",keep
+"I need to cancel the service because I switched providers.",churn
+"Stop account.",churn
+"Do not unsubscribe me from my plan.",keep
+"Please unsubscribe me from our service immediately.",churn
+"Stop the build.",unsure
+"How do i end my account?",churn
+"Can you cancel our account?",churn
+"Do not unsubscribe me from my subscription.",keep
+"Please don't end the subscription.",keep
+"Stop the instance.",unsure
+"Do not cancel my membership.",keep
+"Keep the membership open.",keep
+"Can you cancel my subscription?",churn
+"Terminate membership.",churn
+"How do i close the popup?",unsure
+"No changes; keep the service.",keep
+"I would like to unsubscribe my account.",churn
+"Unsubscribe me from the service.",churn
+"Can you stop our account?",churn
+"Please terminate the membership.",churn
+"Keep the service open.",keep
+"Please keep my membership active.",keep
+"Please don't terminate the subscription.",keep
+"Terminate my plan today.",churn
+"Do not end my subscription.",keep
+"How do i close the preview?",unsure
+"How do i cancel our membership?",churn
+"Cancel my plan immediately.",churn
+"Please don't terminate the account.",keep
+"How do i close the pipeline?",unsure
+"Can you end the subscription?",churn
+"End service.",churn
+"How do i end the server service?",unsure
+"How do i stop the session?",unsure
+"How do i stop the test service?",unsure
+"How do i stop the plan?",churn
+"Please end my membership.",churn
+"Do not end my plan.",keep
+"I need to terminate the membership because I switched providers.",churn
+"I need to stop our service because I no longer need it.",churn
+"How do i end the account?",churn
+"How do i end my subscription?",churn
+"How do i terminate my plan?",churn
+"I prefer to keep my account as is.",keep
+"Please close my account.",churn
+"How do i end the build?",unsure
+"Can you cancel our subscription?",churn
+"Stop my plan today.",churn
+"I need to terminate the subscription because I no longer need it.",churn
+"Terminate the subscription before renewal.",churn
+"Please unsubscribe me from the plan today.",churn
+"Cancel our plan.",churn
+"Can you terminate the plan?",churn
+"No changes; keep the account.",keep
+"How do i stop the container?",unsure
+"How do i close the instance?",unsure
+"How do i stop my subscription?",churn
+"I need to stop my subscription because I no longer need it.",churn
+"How do i close the window?",unsure
+"I need to stop my account due to budget cuts.",churn
+"Can you close my service?",churn
+"Stop my subscription today.",churn
+"How do i unsubscribe from our plan?",churn
+"How do i end the local service?",unsure
+"Can you terminate my plan?",churn
+"Keep the subscription open.",keep
+"Can you terminate our membership?",churn
+"How do i stop the server service?",unsure
+"Please don't end the account.",keep
+"End the background service.",unsure
+"How do i stop the local service?",unsure
+"Cancel the subscription.",churn
+"Unsubscribe me from the account today.",churn
+"How do i close the editor?",unsure
+"Please don't cancel the membership.",keep
+"Terminate the plan.",churn
+"Cancel the service.",churn
+"How do i end the thread?",unsure
+"End our subscription.",churn
+"How do i end the debug session?",unsure
+"Terminate our service.",churn
+"How do i close the vm?",unsure
+"Keep my subscription and renew it automatically.",keep
+"End the pod.",unsure
+"End the subscription.",churn
+"Do not cancel my account.",keep
+"End the task.",unsure
+"Close subscription.",churn
+"I need to terminate my plan because I switched providers.",churn
+"Do not cancel my service.",keep
+"Please stop our service.",churn
+"Can you terminate our service?",churn
+"Terminate my plan.",churn
+"Unsubscribe me from the plan.",churn
+"Terminate our plan.",churn
+"Close the order summary modal.",unsure
+"Can you close my account?",churn
+"Terminate the account.",churn
+"How do i end the connection?",unsure
+"Unsubscribe me from my plan.",churn
+"Unsubscribe me from the membership.",churn
+"Please stop the account.",churn
+"Stop the account.",churn
+"Please don't unsubscribe me from the plan.",keep
+"Keep my membership active.",keep
+"Restart the test service.",unsure
+"Close membership.",churn
+"I need to stop our subscription because company policy changed.",churn
+"I need to close our membership because company policy changed.",churn
+"Close the plan this week.",churn
+"How do i close the connection?",unsure
+"Close my membership.",churn
+"Please continue my plan.",keep
+"Please don't unsubscribe me from the service.",keep
+"Unsubscribe me from the subscription immediately.",churn
+"How do i unsubscribe from my subscription?",churn
+"Unsubscribe me from our subscription today.",churn
+"End the local service.",unsure
+"Please unsubscribe me from my service.",churn
+"Close the editor.",unsure
+"Can you end the account?",churn
+"I would like to stop my account.",churn
+"Disable the system service temporarily.",unsure
+"Please end our account.",churn
+"Close the build.",unsure
+"Unsubscribe me from the membership immediately.",churn
+"I plan to keep the membership.",keep
+"Keep the plan open.",keep
+"End the subscription this week.",churn
+"Please don't unsubscribe me from the account.",keep
+"I need to stop the membership because I no longer need it.",churn
+"End the upload and retry.",unsure
+"Please don't cancel the plan.",keep
+"End my plan.",churn
+"Close the deployment.",unsure
+"Can you end the plan?",churn
+"I need to end the membership due to budget cuts.",churn
+"Close our plan before renewal.",churn
+"Can you end my membership?",churn
+"Please continue my service.",keep
+"Close the popup.",unsure
+"Unsubscribe me from my subscription.",churn
+"Please keep my plan active.",keep
+"Please unsubscribe me from my account.",churn
+"Keep my account and renew it automatically.",keep
+"Unsubscribe me from our service.",churn
+"How do i stop the database service?",unsure
+"Terminate the membership.",churn

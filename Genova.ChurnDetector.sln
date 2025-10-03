@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurnDetector", "ChurnDetector\ChurnDetector.csproj", "{59566E33-76EF-D261-4109-D08D5B0DBE4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurnDetector.Training", "ChurnDetector.Training\ChurnDetector.Training.csproj", "{FF51AD3E-BB23-4F90-AC82-D53ABA1134A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurnDetector.Terminal", "ChurnDetector.Terminal\ChurnDetector.Terminal.csproj", "{6C4AD205-6D12-4CFC-A80C-0CD0380C1356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurnDetector.QualityTests", "ChurnDetector.QualityTests\ChurnDetector.QualityTests.csproj", "{59829357-7D00-4DF1-8740-697526F4BBFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurnDetector.UnitTests", "ChurnDetector.UnitTests\ChurnDetector.UnitTests.csproj", "{3CCFCF68-B507-4E85-ADC0-7FF61B57B496}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59566E33-76EF-D261-4109-D08D5B0DBE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59566E33-76EF-D261-4109-D08D5B0DBE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59566E33-76EF-D261-4109-D08D5B0DBE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59566E33-76EF-D261-4109-D08D5B0DBE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF51AD3E-BB23-4F90-AC82-D53ABA1134A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF51AD3E-BB23-4F90-AC82-D53ABA1134A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF51AD3E-BB23-4F90-AC82-D53ABA1134A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF51AD3E-BB23-4F90-AC82-D53ABA1134A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4AD205-6D12-4CFC-A80C-0CD0380C1356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4AD205-6D12-4CFC-A80C-0CD0380C1356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4AD205-6D12-4CFC-A80C-0CD0380C1356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4AD205-6D12-4CFC-A80C-0CD0380C1356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59829357-7D00-4DF1-8740-697526F4BBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59829357-7D00-4DF1-8740-697526F4BBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59829357-7D00-4DF1-8740-697526F4BBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59829357-7D00-4DF1-8740-697526F4BBFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CCFCF68-B507-4E85-ADC0-7FF61B57B496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CCFCF68-B507-4E85-ADC0-7FF61B57B496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CCFCF68-B507-4E85-ADC0-7FF61B57B496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CCFCF68-B507-4E85-ADC0-7FF61B57B496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C569998-574B-4306-B02B-27CAB414709C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+{
+  "Champion": {
+    "Dim": 256,
+    "ChurnMinSim": 0.38,
+    "MinMargin": 0,
+    "DevMetrics": {
+      "TP": 41,
+      "FP": 0,
+      "FN": 13,
+      "TN": 42,
+      "Precision": 1,
+      "Recall": 0.7592593,
+      "F1": 0.8631579,
+      "Total": 96
+    }
+  },
+  "TestMetrics": {
+    "TP": 41,
+    "FP": 0,
+    "FN": 13,
+    "TN": 43,
+    "Precision": 1,
+    "Recall": 0.7592593,
+    "F1": 0.8631579,
+    "Total": 97
+  },
+  "TrainCount": 450,
+  "DevCount": 96,
+  "TestCount": 97,
+  "Labels": [
+    "churn",
+    "keep",
+    "unsure"
+  ],
+  "CreatedUtc": "2025-10-02T18:01:30.8367331Z"
+}
