@@ -65,4 +65,80 @@ jobs:
       run: dotnet pack ./ChurnDetector/ChurnDetector.csproj --no-build --configuration Release --output ${{ github.workspace }}/nupkg -p:PackageVersion=${{ env.VERSION }}
 
     - name: Publish to GitHub Packages
+      if: github.event_name == 'push'
       run: dotnet nuget push "${{ github.workspace }}\nupkg\*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Delete older package versions and keep latest 3
+      if: github.event_name == 'push'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const packageType = "nuget";
+          const packageName = "Genova.ChurnDetector";
+          const keep = 3;
+
+          const owner = context.repo.owner;
+          const ownerType = context.payload.repository.owner.type;
+
+          let versions;
+          if (ownerType === "Organization") {
+            versions = await github.paginate(
+              "GET /orgs/{org}/packages/{package_type}/{package_name}/versions",
+              {
+                org: owner,
+                package_type: packageType,
+                package_name: packageName,
+                per_page: 100
+              }
+            );
+          } else {
+            versions = await github.paginate(
+              "GET /users/{username}/packages/{package_type}/{package_name}/versions",
+              {
+                username: owner,
+                package_type: packageType,
+                package_name: packageName,
+                per_page: 100
+              }
+            );
+          }
+
+          versions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+          core.info(`Found ${versions.length} package version(s) for ${packageName}.`);
+
+          if (versions.length <= keep) {
+            core.info(`Nothing to delete. Keeping all ${versions.length} version(s).`);
+            return;
+          }
+
+          const toDelete = versions.slice(keep);
+
+          for (const version of toDelete) {
+            core.info(`Deleting version id=${version.id}, name=${version.name}, created_at=${version.created_at}`);
+
+            if (ownerType === "Organization") {
+              await github.request(
+                "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}",
+                {
+                  org: owner,
+                  package_type: packageType,
+                  package_name: packageName,
+                  package_version_id: version.id
+                }
+              );
+            } else {
+              await github.request(
+                "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}",
+                {
+                  username: owner,
+                  package_type: packageType,
+                  package_name: packageName,
+                  package_version_id: version.id
+                }
+              );
+            }
+          }
+
+          core.info(`Kept the latest ${keep} version(s). Deleted ${toDelete.length} older version(s).`);
