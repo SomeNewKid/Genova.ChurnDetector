@@ -37,8 +37,8 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="FluentAssertions" Version="8.2.0" />
-    <PackageReference Include="Genova.Common" Version="1.0.0-20260406-2149" />
-    <PackageReference Include="Genova.Testing" Version="1.0.0-20260406-2238" />
+    <PackageReference Include="Genova.Common" Version="1.0.0-20260602-0830" />
+    <PackageReference Include="Genova.Testing" Version="1.0.0-20260602-1226" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="MSTest" Version="3.6.4" />
   </ItemGroup>
