@@ -35,11 +35,11 @@
 
   <!-- Package References -->
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="coverlet.collector" Version="10.0.1" />
     <PackageReference Include="FluentAssertions" Version="8.10.0" />
-    <PackageReference Include="Genova.Common" Version="1.0.0-20260606-1507" />
-    <PackageReference Include="Genova.Testing" Version="1.0.0-20260606-1602" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Genova.Common" Version="1.0.0-20260606-1841" />
+    <PackageReference Include="Genova.Testing" Version="1.0.0-20260606-1906" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.6.0" />
     <PackageReference Include="MSTest" Version="3.6.4" />
   </ItemGroup>
 
