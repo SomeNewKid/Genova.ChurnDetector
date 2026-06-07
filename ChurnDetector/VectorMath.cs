@@ -65,14 +65,14 @@ internal static class VectorMath
     /// <returns>
     /// A tuple containing:
     /// <list type="bullet">
-    /// <item><description><c>topIdx</c>: index of the largest value.</description></item>
-    /// <item><description><c>secondIdx</c>: index of the second-largest value.</description></item>
-    /// <item><description><c>top</c>: the largest value.</description></item>
-    /// <item><description><c>second</c>: the second-largest value.</description></item>
+    /// <item><description><c>TopIdx</c>: index of the largest value.</description></item>
+    /// <item><description><c>SecondIdx</c>: index of the second-largest value.</description></item>
+    /// <item><description><c>Top</c>: the largest value.</description></item>
+    /// <item><description><c>Second</c>: the second-largest value.</description></item>
     /// </list>
     /// If <paramref name="sims"/> is empty, indices are <c>-1</c> and values are <see cref="float.NegativeInfinity"/>.
     /// </returns>
-    public static (int topIdx, int secondIdx, float top, float second) Top2(ReadOnlySpan<float> sims)
+    public static (int TopIdx, int SecondIdx, float Top, float Second) Top2(ReadOnlySpan<float> sims)
     {
         int topIdx = -1;
         int secondIdx = -1;

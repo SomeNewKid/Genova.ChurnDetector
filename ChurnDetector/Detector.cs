@@ -149,7 +149,10 @@ public sealed partial class Detector
 
         // Determine top-2 and margin using prototype sims (ranking unchanged).
         Span<float> sims = [churnProto, keepSim, unsureSim];
-        (int topIdx, int secondIdx, float top, float second) = VectorMath.Top2(sims);
+        var result = VectorMath.Top2(sims);
+        int topIdx = result.TopIdx;
+        float top = result.Top;
+        float second = result.Second;
         float margin = top - second;
 
         bool hasCue = ChurnCueRegex().IsMatch(input ?? string.Empty);
@@ -210,7 +213,7 @@ public sealed partial class Detector
         {
             0 => "churn",
             1 => "keep",
-            _ => "unsure"
+            _ => "unsure",
         };
 
         bool cue = ChurnCueRegex().IsMatch(input ?? string.Empty);
@@ -368,19 +371,19 @@ public sealed partial class Detector
         }
 
         // Compute similarities to all seeds; pick top-k.
-        List<(float sim, string label)> sims = new List<(float sim, string label)>(_seeds.Length);
+        List<(float Sim, string Label)> sims = new List<(float Sim, string Label)>(_seeds.Length);
         foreach ((float[] V, string Label) seed in _seeds)
         {
             sims.Add((VectorMath.Dot(v, seed.V), seed.Label));
         }
 
-        sims.Sort((a, b) => b.sim.CompareTo(a.sim));
+        sims.Sort((a, b) => b.Sim.CompareTo(a.Sim));
         int kk = Math.Min(k, sims.Count);
 
         int churnCount = 0;
         for (int i = 0; i < kk; i++)
         {
-            if (string.Equals(sims[i].label, "churn", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(sims[i].Label, "churn", StringComparison.OrdinalIgnoreCase))
             {
                 churnCount++;
             }
