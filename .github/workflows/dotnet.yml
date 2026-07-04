@@ -76,7 +76,7 @@ jobs:
         script: |
           const packageType = "nuget";
           const packageName = "Genova.ChurnDetector";
-          const keep = 2;
+          const keep = 1;
 
           const owner = context.repo.owner;
           const ownerType = context.payload.repository.owner.type;
